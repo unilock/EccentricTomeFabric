@@ -1,155 +1,60 @@
 plugins {
-    id 'eclipse'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
-    id 'com.matthewprenger.cursegradle' version '1.4.0'
-    id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-    id 'com.modrinth.minotaur' version '2.+'
+	id 'fabric-loom' version '1.4-SNAPSHOT'
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of java_version
+version = "${project.minecraft_version}-${project.mod_version}"
+group = project.maven_group
 
-version = "${minecraft_version}-${mod_version}"
-group = mod_group
-base.archivesName = mod_id
-
-minecraft {
-    mappings channel: mapping_channel, version: mapping_version
-    copyIdeResources = true
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
-
-            mods {
-                "${mod_id}" {
-                    source sourceSets.main
-                }
-            }
-
-            properties = [
-                'mixin.env.remapRefMap'        : 'true',
-                'mixin.env.refMapRemappingFile': project.file('build/createSrgToMcp/output.srg')
-            ]
-        }
-        client {
-            taskName 'Client'
-        }
-
-        server {
-            taskName 'Server'
-        }
-    }
+base {
+	archivesName = project.archives_base_name
 }
 
-// Testing
-// repositories {
-//     maven {
-//         url 'https://maven.blamejared.com'
-//         content {
-//             includeGroup 'vazkii.patchouli'
-//         }
-//     }
-//     maven {
-//         url 'https://cursemaven.com'
-//         content {
-//             includeGroup 'curse.maven'
-//         }
-//     }
-//     maven {
-//         url 'https://maven.blakesmods.com'
-//         content {
-//             includeGroup 'com.blakebr0.cucumber'
-//             includeGroup 'com.blakebr0.mysticalagriculture'
-//         }
-//     }
-//     maven {
-//         url 'https://nexus.twelveiterations.com/repository/maven-public'
-//         content {
-//             includeGroup 'net.blay09.mods'
-//         }
-//     }
-//     maven {
-//         url 'https://maven.pkg.github.com/CyclopsMC/packages'
-//         content {
-//             includeGroup 'org.cyclops.cyclopscore'
-//             includeGroup 'org.cyclops.evilcraft'
-//         }
-//         credentials {
-//             username System.getenv('GITHUB_ACTOR')
-//             password System.getenv('GITHUB_TOKEN')
-//         }
-//     }
-// }
+repositories {
+	maven {
+		name = "Fuzs Mod Resources"
+		url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
+	}
+}
+
+loom {
+    mods {
+		"eccentrictome" {
+			sourceSet sourceSets.main
+		}
+	}
+}
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	mappings loom.officialMojangMappings()
+	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    // Testing
-    // runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:${minecraft_version}-${patchouli_version}")
-
-    // runtimeOnly fg.deobf("com.blakebr0.cucumber:Cucumber:${minecraft_version}-${cucumber_version}")
-    // runtimeOnly fg.deobf("com.blakebr0.mysticalagriculture:MysticalAgriculture:${minecraft_version}-${mystical_agriculture_version}")
-
-    // runtimeOnly fg.deobf("net.blay09.mods:balm-forge:${balm_version}+1.20")
-    // runtimeOnly fg.deobf("net.blay09.mods:cookingforblockheads-forge:${cfb_version}+1.20")
-
-    // runtimeOnly fg.deobf("org.cyclops.cyclopscore:cyclopscore:${minecraft_version}-${cyclopscore_version}")
-    // runtimeOnly fg.deobf("org.cyclops.evilcraft:evilcraft:${minecraft_version}-${evilcraft_version}")
-
-    // runtimeOnly fg.deobf('curse.maven:placebo-283644:4036338')
-    // runtimeOnly fg.deobf('curse.maven:apotheosis-313970:4048780')
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.fcapi_version}"
 }
 
 processResources {
-    var replaceProperties = [
-            minecraft_version       : minecraft_version,
-            minecraft_version_range : minecraft_version_range,
-            forge_version           : forge_version,
-            forge_version_range     : forge_version_range,
-            loader_version_range    : loader_version_range,
-            mod_id                  : mod_id,
-            mod_name                : mod_name,
-            mod_license             : mod_license,
-            mod_version             : mod_version,
-            mod_author              : mod_author,
-            mod_description         : mod_description,
-            pack_format             : pack_format,
-    ]
+	inputs.property "version", project.version
 
-    inputs.properties replaceProperties
-
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
-    }
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
 }
 
-jar.manifest.attributes = [
-    'Specification-Title'     : mod_id,
-    'Specification-Vendor'    : mod_author,
-    'Specification-Version'   : '1',
-    'Implementation-Title'    : project.name,
-    'Implementation-Version'  : mod_version,
-    'Implementation-Vendor'   : mod_author,
-    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ'),
-]
-
-jar.finalizedBy 'reobfJar'
-
-curseforge {
-    apiKey = System.getenv().CURSEFORGE_KEY ?: 'none'
-    project {
-        id = curseforge_project_id
-        releaseType = curseforge_release_type
-        addGameVersion 'Forge'
-        addGameVersion minecraft_version
-        addGameVersion "Java ${java_version}"
-        mainArtifact jar
-    }
+tasks.withType(JavaCompile).configureEach {
+	it.options.encoding = "UTF-8"
+	it.options.release = 17
 }
 
-modrinth {
-    token = System.getenv().MODRINTH_TOKEN ?: 'none'
-    projectId = modrinth_project_id
-    versionType = modrinth_release_type
-    gameVersions = [minecraft_version]
-    uploadFile = jar
+java {
+	withSourcesJar()
+
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}"}
+	}
 }

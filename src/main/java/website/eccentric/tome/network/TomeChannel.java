@@ -1,26 +1,17 @@
 package website.eccentric.tome.network;
 
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import website.eccentric.tome.EccentricTome;
+import website.eccentric.tome.network.packet.ConvertC2SPacket;
+import website.eccentric.tome.network.packet.RevertC2SPacket;
 
 public class TomeChannel {
-    public static final ResourceLocation name = new ResourceLocation(EccentricTome.ID, "general");
-    public static final String version = new ResourceLocation(EccentricTome.ID, "1").toString();
+	public static final ResourceLocation CONVERT_ID = EccentricTome.id("convert");
+	public static final ResourceLocation REVERT_ID = EccentricTome.id("revert");
 
-    public static SimpleChannel register() {
-        final var channel = NetworkRegistry.ChannelBuilder.named(name)
-                .clientAcceptedVersions(version -> true)
-                .serverAcceptedVersions(version -> true)
-                .networkProtocolVersion(() -> version)
-                .simpleChannel();
-
-        channel.registerMessage(1, ConvertMessage.class, ConvertMessage::encode, ConvertMessage::decode,
-                ConvertMessage::handle);
-        channel.registerMessage(2, RevertMessage.class, RevertMessage::encode, RevertMessage::decode,
-                RevertMessage::handle);
-
-        return channel;
+    public static void register() {
+		ServerPlayNetworking.registerGlobalReceiver(CONVERT_ID, ConvertC2SPacket::receive);
+		ServerPlayNetworking.registerGlobalReceiver(REVERT_ID, RevertC2SPacket::receive);
     }
 }

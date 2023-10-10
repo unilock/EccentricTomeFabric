@@ -1,10 +1,10 @@
 package website.eccentric.tome.client;
 
 import net.minecraft.client.Minecraft;
-import website.eccentric.tome.events.OpenTomeEvent;
+import net.minecraft.world.item.ItemStack;
 
 public class TomeHandler {
-    public static void onOpenTome(OpenTomeEvent event) {
-        Minecraft.getInstance().setScreen(new TomeScreen(event.tome));
+    public static void onOpenTome(ItemStack tome) {
+        Minecraft.getInstance().setScreen(new TomeScreen(tome));
     }
 }

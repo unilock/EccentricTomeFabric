@@ -6,15 +6,15 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import website.eccentric.tome.ModName;
 import website.eccentric.tome.Tome;
 import website.eccentric.tome.TomeItem;
-import website.eccentric.tome.ModName;
 
 public class RenderGuiOverlayHandler {
-	public static void onRender(RenderGuiOverlayEvent.Post event) {
+	public static void onRender(GuiGraphics gui, float tickDelta) {
 		var minecraft = Minecraft.getInstance();
 
 		var player = minecraft.player;
@@ -59,11 +59,10 @@ public class RenderGuiOverlayHandler {
 		RenderSystem.enableBlend();
 		RenderSystem.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-		var window = event.getWindow();
+		var window = Minecraft.getInstance().getWindow();
 		var x = window.getGuiScaledWidth() / 2 - 17;
 		var y = window.getGuiScaledHeight() / 2 + 2;
 
-		var gui = event.getGuiGraphics();
 		gui.renderItem(book, x, y);
 		gui.drawString(minecraft.font, hoverName, x + 20, y + 4, 0xFFFFFFFF);
 		gui.drawString(minecraft.font, ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);

@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
-        var registry = ForgeRegistries.ITEMS.getKey(book.getItem());
-        books.removeIf(b -> ForgeRegistries.ITEMS.getKey(b.getItem()).equals(registry));
+		var registry = BuiltInRegistries.ITEM.getKey(book.getItem());
+        books.removeIf(b -> BuiltInRegistries.ITEM.getKey(b.getItem()).equals(registry));
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
@@ -32,7 +32,7 @@ public class Tome {
     public static ItemStack revert(ItemStack book) {
         Migration.apply(book);
 
-        var tome = new ItemStack(EccentricTome.TOME.get());
+        var tome = new ItemStack(EccentricTome.TOME);
         copyMods(book, tome);
         Migration.setVersion(tome);
         clear(book);

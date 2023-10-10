@@ -3,16 +3,15 @@ package website.eccentric.tome.client;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import com.mojang.blaze3d.platform.InputConstants;
-
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import website.eccentric.tome.EccentricTome;
 import website.eccentric.tome.Tome;
-import website.eccentric.tome.network.ConvertMessage;
+import website.eccentric.tome.network.TomeChannel;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
@@ -31,7 +30,7 @@ public class TomeScreen extends Screen {
         if (button != LEFT_CLICK || book == null)
             return super.mouseClicked(x, y, button);
 
-        EccentricTome.CHANNEL.sendToServer(new ConvertMessage(book));
+		ClientPlayNetworking.send(TomeChannel.CONVERT_ID, PacketByteBufs.create().writeItem(book));
 
         this.onClose();
         return true;
@@ -40,10 +39,9 @@ public class TomeScreen extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         var minecraft = this.minecraft;
-        var key = InputConstants.getKey(keyCode, scanCode);
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
-        } else if (minecraft != null && minecraft.options.keyInventory.isActiveAndMatches(key)) {
+        } else if (minecraft != null && minecraft.options.keyInventory.isDown() && minecraft.options.keyInventory.matches(keyCode, scanCode)) {
             this.onClose();
             return true;
         } else {

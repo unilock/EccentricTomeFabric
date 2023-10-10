@@ -3,11 +3,11 @@ package website.eccentric.tome;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();
@@ -15,17 +15,17 @@ public class ModName {
     public static final String PATCHOULI = "patchouli";
 
     static {
-        for (var mod : ModList.get().getMods()) {
-            modNames.put(mod.getModId(), mod.getDisplayName());
+        for (var mod : FabricLoader.getInstance().getAllMods()) {
+            modNames.put(mod.getMetadata().getId(), mod.getMetadata().getName());
         }
     }
 
     public static String from(BlockState state) {
-        return orAlias(ForgeRegistries.BLOCKS.getKey(state.getBlock()).getNamespace());
+        return orAlias(BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace());
     }
 
     public static String from(ItemStack stack) {
-        var mod = stack.getItem().getCreatorModId(stack);
+        var mod = BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace();
         if (mod.equals(PATCHOULI)) {
             var tag = stack.getTag();
             if (tag == null)

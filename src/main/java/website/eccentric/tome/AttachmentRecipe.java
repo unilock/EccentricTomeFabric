@@ -2,8 +2,10 @@ package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +13,6 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class AttachmentRecipe extends CustomRecipe {
     public AttachmentRecipe(ResourceLocation location, CraftingBookCategory category) {
@@ -85,7 +86,7 @@ public class AttachmentRecipe extends CustomRecipe {
         if (Configuration.EXCLUDE.get().contains(mod))
             return false;
 
-        var location = ForgeRegistries.ITEMS.getKey(stack.getItem());
+        var location = BuiltInRegistries.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
@@ -98,8 +99,7 @@ public class AttachmentRecipe extends CustomRecipe {
             return true;
 
         for (var tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
-            var itemTag = ForgeRegistries.ITEMS.tags().getTag(ItemTags.create(new ResourceLocation(tag)));
-            if (itemTag.contains(stack.getItem()))
+			if (stack.getItem().getDefaultInstance().is(TagKey.create(Registries.ITEM, new ResourceLocation(tag))))
                 return true;
         }
 
@@ -124,6 +124,6 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return EccentricTome.ATTACHMENT.get();
+        return EccentricTome.ATTACHMENT;
     }
 }
