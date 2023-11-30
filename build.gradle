@@ -20,7 +20,7 @@ repositories {
 loom {
     mods {
 		"eccentrictome" {
-			sourceSet sourceSets.main
+			sourceSet("main")
 		}
 	}
 }
@@ -60,6 +60,6 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.base.archivesName.get()}"}
+		rename { "${it}_${project.base.archivesName.get()}" }
 	}
 }
