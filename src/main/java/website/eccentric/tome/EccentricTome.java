@@ -5,9 +5,11 @@ import org.apache.logging.log4j.Logger;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
@@ -27,6 +29,8 @@ public class EccentricTome implements ModInitializer {
 
 		ForgeConfigRegistry.INSTANCE.register(ID, ModConfig.Type.COMMON, Configuration.SPEC);
 		onModConfig();
+
+		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> entries.accept(TOME));
 	}
 
     private static void onModConfig() {
