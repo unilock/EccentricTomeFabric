@@ -3,13 +3,13 @@ package website.eccentric.tome;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.fabricmc.fabric.api.event.client.player.ClientPreAttackCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;
 import website.eccentric.tome.client.RenderGuiOverlayHandler;
 import website.eccentric.tome.client.TomeHandler;
+import website.eccentric.tome.events.ClientPreAttackCallback;
 import website.eccentric.tome.events.OpenTomeCallback;
 import website.eccentric.tome.network.TomeChannel;
 

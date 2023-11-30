@@ -7,7 +7,7 @@ import java.util.Map;
 import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -18,8 +18,8 @@ public class Tome {
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
-		var registry = BuiltInRegistries.ITEM.getKey(book.getItem());
-        books.removeIf(b -> BuiltInRegistries.ITEM.getKey(b.getItem()).equals(registry));
+		var registry = Registry.ITEM.getKey(book.getItem());
+        books.removeIf(b -> Registry.ITEM.getKey(b.getItem()).equals(registry));
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
@@ -45,7 +45,9 @@ public class Tome {
         var modsBooks = getModsBooks(tome);
 
         var books = modsBooks.getOrDefault(mod, new ArrayList<ItemStack>());
-        books.add(book.copyWithCount(1));
+        book = book.copy();
+        book.setCount(1);
+        books.add(book);
         modsBooks.put(mod, books);
 
         setModsBooks(tome, modsBooks);

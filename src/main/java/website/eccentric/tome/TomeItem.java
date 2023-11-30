@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -20,7 +21,7 @@ import website.eccentric.tome.events.OpenTomeCallback;
 
 public class TomeItem extends Item {
     public TomeItem() {
-        super(new Properties().stacksTo(1));
+        super(new Properties().stacksTo(1).tab(CreativeModeTab.TAB_TOOLS));
     }
 
     @Override

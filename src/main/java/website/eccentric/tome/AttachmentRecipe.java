@@ -1,22 +1,22 @@
 package website.eccentric.tome;
 
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class AttachmentRecipe extends CustomRecipe {
-    public AttachmentRecipe(ResourceLocation location, CraftingBookCategory category) {
-        super(location, category);
+    public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;
+
+    public AttachmentRecipe(ResourceLocation location) {
+        super(location);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer crafting, RegistryAccess access) {
+    public ItemStack assemble(CraftingContainer crafting) {
         var tome = ItemStack.EMPTY;
         var target = ItemStack.EMPTY;
 
@@ -86,7 +86,7 @@ public class AttachmentRecipe extends CustomRecipe {
         if (Configuration.EXCLUDE.get().contains(mod))
             return false;
 
-        var location = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        var location = Registry.ITEM.getKey(stack.getItem());
         var locationString = location.toString();
         var locationDamage = locationString + ":" + stack.getDamageValue();
 
@@ -99,7 +99,7 @@ public class AttachmentRecipe extends CustomRecipe {
             return true;
 
         for (var tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
-			if (stack.getItem().getDefaultInstance().is(TagKey.create(Registries.ITEM, new ResourceLocation(tag))))
+			if (stack.getItem().getDefaultInstance().is(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(tag))))
                 return true;
         }
 
@@ -113,7 +113,7 @@ public class AttachmentRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack getResultItem(RegistryAccess access) {
+    public ItemStack getResultItem() {
         return ItemStack.EMPTY;
     }
 
@@ -124,6 +124,6 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return EccentricTome.ATTACHMENT;
+        return SERIALIZER;
     }
 }

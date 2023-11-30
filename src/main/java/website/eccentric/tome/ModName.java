@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,11 +21,11 @@ public class ModName {
     }
 
     public static String from(BlockState state) {
-        return orAlias(BuiltInRegistries.BLOCK.getKey(state.getBlock()).getNamespace());
+        return orAlias(Registry.BLOCK.getKey(state.getBlock()).getNamespace());
     }
 
     public static String from(ItemStack stack) {
-        var mod = BuiltInRegistries.ITEM.getKey(stack.getItem()).getNamespace();
+        var mod = Registry.ITEM.getKey(stack.getItem()).getNamespace();
         if (mod.equals(PATCHOULI)) {
             var tag = stack.getTag();
             if (tag == null)

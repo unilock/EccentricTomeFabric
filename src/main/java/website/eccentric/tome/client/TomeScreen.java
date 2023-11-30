@@ -3,9 +3,10 @@ package website.eccentric.tome.client;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -55,12 +56,12 @@ public class TomeScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics gui, int mouseX, int mouseY, float ticks) {
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float ticks) {
         var minecraft = this.minecraft;
         if (minecraft == null)
             return;
 
-        super.render(gui, mouseX, mouseY, ticks);
+        super.render(poseStack, mouseX, mouseY, ticks);
 
         var books = Tome.getModsBooks(tome).values().stream()
                 .flatMap(Collection::stream)
@@ -73,8 +74,7 @@ public class TomeScreen extends Screen {
         var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
         var padding = 4;
-        gui.fill(startX - padding, startY - padding,
-                startX + iconSize * booksPerRow + padding,
+        fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding,
                 startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;
@@ -90,13 +90,12 @@ public class TomeScreen extends Screen {
                 this.book = book;
             }
 
-            gui.renderItem(book, stackX, stackY);
-            gui.renderItemDecorations(font, book, mouseX, mouseY);
+            minecraft.getItemRenderer().renderAndDecorateItem(book, stackX, stackY);
             index++;
         }
 
         if (this.book != null) {
-            gui.renderComponentTooltip(this.font, getTooltipFromItem(minecraft, this.book), mouseX, mouseY);
+            renderComponentTooltip(poseStack, getTooltipFromItem(this.book), mouseX, mouseY);
         }
     }
 }
