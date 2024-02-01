@@ -1,9 +1,7 @@
 package website.eccentric.tome;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
+import fuzs.forgeconfigapiport.api.config.v2.ModConfigEvents;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
@@ -14,6 +12,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.fml.config.ModConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import website.eccentric.tome.network.TomeChannel;
 
 public class EccentricTome implements ModInitializer {
@@ -28,7 +28,8 @@ public class EccentricTome implements ModInitializer {
 		TomeChannel.register();
 
 		ForgeConfigRegistry.INSTANCE.register(ID, ModConfig.Type.COMMON, Configuration.SPEC);
-		onModConfig();
+		ModConfigEvents.loading(ID).register(config -> onModConfig());
+		ModConfigEvents.reloading(ID).register(config -> onModConfig());
 
 		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> entries.accept(TOME));
 	}
