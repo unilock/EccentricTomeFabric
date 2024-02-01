@@ -1,9 +1,5 @@
 package website.eccentric.tome;
 
-import net.minecraftforge.api.fml.event.config.ModConfigEvents;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +7,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraftforge.api.ModLoadingContext;
+import net.minecraftforge.api.fml.event.config.ModConfigEvents;
 import net.minecraftforge.fml.config.ModConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import website.eccentric.tome.network.TomeChannel;
 
 public class EccentricTome implements ModInitializer {
@@ -27,6 +26,7 @@ public class EccentricTome implements ModInitializer {
 
 		ModLoadingContext.registerConfig(ID, ModConfig.Type.COMMON, Configuration.SPEC);
 		ModConfigEvents.loading(ID).register(modConfig -> onModConfig());
+		ModConfigEvents.reloading(ID).register(modConfig -> onModConfig());
 	}
 
     private static void onModConfig() {
