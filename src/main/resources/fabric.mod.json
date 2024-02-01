@@ -1,33 +1,33 @@
 {
-	"schemaVersion": 1,
-	"id": "eccentrictome",
-	"version": "${version}",
-	"name": "Eccentric Tome",
-	"description": "This mod adds a single item: the Eccentric Tome.\n\nThe Tome solves a single problem: managing all of your guide books.\n\nThe Tome allows many (infinite?) books to be combined into a single item, and enables them to be retrieved when needed.",
-	"authors": [
-		"EccentricVamp"
-	],
-	"contact": {
-		"sources": "https://github.com/EccentricVamp/EccentricTome"
-	},
-	"license": "LGPL-3.0",
-	"icon": "assets/eccentrictome/textures/item/tome.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"website.eccentric.tome.EccentricTome"
-		],
+  "schemaVersion": 1,
+  "id": "eccentrictome",
+  "version": "${version}",
+  "name": "Eccentric Tome",
+  "description": "This mod adds a single item: the Eccentric Tome.\n\nThe Tome solves a single problem: managing all of your guide books.\n\nThe Tome allows many (infinite?) books to be combined into a single item, and enables them to be retrieved when needed.",
+  "authors": [
+    "EccentricVamp"
+  ],
+  "contact": {
+    "sources": "https://github.com/EccentricVamp/EccentricTome"
+  },
+  "license": "LGPL-3.0",
+  "icon": "assets/eccentrictome/textures/item/tome.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "website.eccentric.tome.EccentricTome"
+    ],
     "client": [
       "website.eccentric.tome.EccentricTomeClient"
     ]
-	},
-	"mixins": [
+  },
+  "mixins": [
     "eccentrictome.mixins.json"
-	],
-	"depends": {
-		"fabricloader": "*",
-		"minecraft": ">=1.19.2",
-		"fabric-api": "*",
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": ">=1.19.2",
+    "fabric-api": "*",
     "forgeconfigapiport": "*"
-	}
+  }
 }

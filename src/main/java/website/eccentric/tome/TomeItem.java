@@ -1,9 +1,5 @@
 package website.eccentric.tome;
 
-import java.util.List;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -17,7 +13,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 import website.eccentric.tome.events.OpenTomeCallback;
+
+import java.util.List;
 
 public class TomeItem extends Item {
     public TomeItem() {
@@ -52,7 +51,7 @@ public class TomeItem extends Item {
         var tome = player.getItemInHand(hand);
 
         if (level.isClientSide)
-			OpenTomeCallback.EVENT.invoker().onOpenTome(tome);
+            OpenTomeCallback.EVENT.invoker().onOpenTome(tome);
 
         return InteractionResultHolder.sidedSuccess(tome, level.isClientSide);
     }

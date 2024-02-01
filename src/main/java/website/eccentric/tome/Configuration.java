@@ -1,11 +1,11 @@
 package website.eccentric.tome;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
 
 public class Configuration {
     public static final ForgeConfigSpec.BooleanValue ALL_ITEMS;

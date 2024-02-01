@@ -14,22 +14,22 @@ import website.eccentric.tome.events.OpenTomeCallback;
 import website.eccentric.tome.network.TomeChannel;
 
 public class EccentricTomeClient implements ClientModInitializer {
-	@Override
-	public void onInitializeClient() {
-		ClientPreAttackCallback.EVENT.register(EccentricTomeClient::onLeftClickEmpty);
-		HudRenderCallback.EVENT.register(RenderGuiOverlayHandler::onRender);
-		OpenTomeCallback.EVENT.register(TomeHandler::onOpenTome);
-	}
+    @Override
+    public void onInitializeClient() {
+        ClientPreAttackCallback.EVENT.register(EccentricTomeClient::onLeftClickEmpty);
+        HudRenderCallback.EVENT.register(RenderGuiOverlayHandler::onRender);
+        OpenTomeCallback.EVENT.register(TomeHandler::onOpenTome);
+    }
 
-	private static boolean onLeftClickEmpty(Minecraft client, LocalPlayer player, int clickCount) {
-		var stack = player.getMainHandItem();
+    private static boolean onLeftClickEmpty(Minecraft client, LocalPlayer player, int clickCount) {
+        var stack = player.getMainHandItem();
 
-		if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
-			ClientPlayNetworking.send(TomeChannel.REVERT_ID, PacketByteBufs.empty());
-			client.gameRenderer.itemInHandRenderer.itemUsed(InteractionHand.MAIN_HAND);
-			return true;
-		}
+        if (Tome.isTome(stack) && !(stack.getItem() instanceof TomeItem)) {
+            ClientPlayNetworking.send(TomeChannel.REVERT_ID, PacketByteBufs.empty());
+            client.gameRenderer.itemInHandRenderer.itemUsed(InteractionHand.MAIN_HAND);
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

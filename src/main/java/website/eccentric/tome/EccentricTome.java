@@ -17,12 +17,12 @@ public class EccentricTome implements ModInitializer {
     public static final String ID = "eccentrictome";
     public static final Logger LOGGER = LogManager.getLogger(ID);
 
-    public static final RecipeSerializer<?> ATTACHMENT = Registry.register(Registry.RECIPE_SERIALIZER, id("attachment"), AttachmentRecipe.SERIALIZER = new SimpleRecipeSerializer<>(AttachmentRecipe::new));
+    public static final RecipeSerializer<?> ATTACHMENT = Registry.register(Registry.RECIPE_SERIALIZER, id("attachment"), new SimpleRecipeSerializer<>(AttachmentRecipe::new));
     public static final Item TOME = Registry.register(Registry.ITEM, id("tome"), new TomeItem());
 
-	@Override
-	public void onInitialize() {
-		TomeChannel.register();
+    @Override
+    public void onInitialize() {
+        TomeChannel.register();
 
 		ModLoadingContext.registerConfig(ID, ModConfig.Type.COMMON, Configuration.SPEC);
 		ModConfigEvents.loading(ID).register(modConfig -> onModConfig());
@@ -37,7 +37,7 @@ public class EccentricTome implements ModInitializer {
         }
     }
 
-	public static ResourceLocation id(String location) {
-		return new ResourceLocation(ID, location);
-	}
+    public static ResourceLocation id(String location) {
+        return new ResourceLocation(ID, location);
+    }
 }

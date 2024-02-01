@@ -1,13 +1,13 @@
 package website.eccentric.tome;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModName {
     private static final Map<String, String> modNames = new HashMap<>();

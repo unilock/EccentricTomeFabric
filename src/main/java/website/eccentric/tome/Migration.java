@@ -1,10 +1,10 @@
 package website.eccentric.tome;
 
-import java.util.Map;
-import java.util.function.Consumer;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+
+import java.util.Map;
+import java.util.function.Consumer;
 
 public class Migration {
     public static final int CURRENT_VERSION = 1;

@@ -14,6 +14,9 @@ import net.minecraft.world.item.Items;
 import website.eccentric.tome.Tome;
 import website.eccentric.tome.network.TomeChannel;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
 
@@ -31,7 +34,7 @@ public class TomeScreen extends Screen {
         if (button != LEFT_CLICK || book == null)
             return super.mouseClicked(x, y, button);
 
-		ClientPlayNetworking.send(TomeChannel.CONVERT_ID, PacketByteBufs.create().writeItem(book));
+        ClientPlayNetworking.send(TomeChannel.CONVERT_ID, PacketByteBufs.create().writeItem(book));
 
         this.onClose();
         return true;
@@ -74,7 +77,8 @@ public class TomeScreen extends Screen {
         var startX = window.getGuiScaledWidth() / 2 - booksPerRow * iconSize / 2;
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
         var padding = 4;
-        fill(poseStack, startX - padding, startY - padding, startX + iconSize * booksPerRow + padding,
+        fill(poseStack, startX - padding, startY - padding,
+				startX + iconSize * booksPerRow + padding,
                 startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;
