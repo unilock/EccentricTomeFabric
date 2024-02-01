@@ -97,8 +97,7 @@ public class Configuration {
                                 "rftoolspower=rftoolsbase",
                                 "rftoolsstorage=rftoolsbase",
                                 "rftoolsutility=rftoolsbase",
-                                "xnet=rftoolsbase",
-                                "zenith=apotheosis"),
+                                "xnet=rftoolsbase"),
                         Validator::isString);
 
         EXCLUDE = BUILDER
@@ -165,7 +164,19 @@ public class Configuration {
                                 "tombstone:book_of_repairing",
                                 "wizards:arcane_spell_book",
                                 "wizards:fire_spell_book",
-                                "wizards:frost_spell_book"),
+                                "wizards:frost_spell_book",
+                                "zenith:boots_tome",
+                                "zenith:bow_tome",
+                                "zenith:chestplate_tome",
+                                "zenith:extraction_tome",
+                                "zenith:fishing_tome",
+                                "zenith:helmet_tome",
+                                "zenith:improved_scrap_tome",
+                                "zenith:leggings_tome",
+                                "zenith:other_tome",
+                                "zenith:pickaxe_tome",
+                                "zenith:scrap_tome",
+                                "zenith:weapon_tome"),
                         Validator::isStringResource);
 
         INCLUDE_ITEM_TAGS = BUILDER
