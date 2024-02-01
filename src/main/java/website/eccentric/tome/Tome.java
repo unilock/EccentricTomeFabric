@@ -1,24 +1,23 @@
 package website.eccentric.tome;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Tome {
     public static ItemStack convert(ItemStack tome, ItemStack book) {
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
-		var registry = BuiltInRegistries.ITEM.getKey(book.getItem());
+        var registry = BuiltInRegistries.ITEM.getKey(book.getItem());
         books.removeIf(b -> BuiltInRegistries.ITEM.getKey(b.getItem()).equals(registry));
 
         setModsBooks(book, modsBooks);

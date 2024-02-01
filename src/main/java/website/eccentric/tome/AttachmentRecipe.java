@@ -99,7 +99,7 @@ public class AttachmentRecipe extends CustomRecipe {
             return true;
 
         for (var tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
-			if (stack.getItem().getDefaultInstance().is(TagKey.create(Registries.ITEM, new ResourceLocation(tag))))
+            if (stack.getItem().getDefaultInstance().is(TagKey.create(Registries.ITEM, new ResourceLocation(tag))))
                 return true;
         }
 

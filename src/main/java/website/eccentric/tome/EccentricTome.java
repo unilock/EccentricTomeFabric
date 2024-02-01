@@ -23,16 +23,16 @@ public class EccentricTome implements ModInitializer {
     public static final RecipeSerializer<?> ATTACHMENT = Registry.register(BuiltInRegistries.RECIPE_SERIALIZER, id("attachment"), new SimpleCraftingRecipeSerializer<>(AttachmentRecipe::new));
     public static final Item TOME = Registry.register(BuiltInRegistries.ITEM, id("tome"), new TomeItem());
 
-	@Override
-	public void onInitialize() {
-		TomeChannel.register();
+    @Override
+    public void onInitialize() {
+        TomeChannel.register();
 
-		ForgeConfigRegistry.INSTANCE.register(ID, ModConfig.Type.COMMON, Configuration.SPEC);
-		ModConfigEvents.loading(ID).register(config -> onModConfig());
-		ModConfigEvents.reloading(ID).register(config -> onModConfig());
+        ForgeConfigRegistry.INSTANCE.register(ID, ModConfig.Type.COMMON, Configuration.SPEC);
+        ModConfigEvents.loading(ID).register(config -> onModConfig());
+        ModConfigEvents.reloading(ID).register(config -> onModConfig());
 
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> entries.accept(TOME));
-	}
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(entries -> entries.accept(TOME));
+    }
 
     private static void onModConfig() {
         Configuration.ALIAS_MAP.clear();
@@ -42,7 +42,7 @@ public class EccentricTome implements ModInitializer {
         }
     }
 
-	public static ResourceLocation id(String location) {
-		return new ResourceLocation(ID, location);
-	}
+    public static ResourceLocation id(String location) {
+        return new ResourceLocation(ID, location);
+    }
 }

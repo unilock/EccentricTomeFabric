@@ -8,13 +8,13 @@ import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import website.eccentric.tome.Tome;
 
 public class RevertC2SPacket {
-	public static void receive(MinecraftServer server, ServerPlayer player, ServerGamePacketListenerImpl handler, FriendlyByteBuf buf, PacketSender responseSender) {
-		var hand = Tome.inHand(player);
+    public static void receive(MinecraftServer server, ServerPlayer player, ServerGamePacketListenerImpl handler, FriendlyByteBuf buf, PacketSender responseSender) {
+        var hand = Tome.inHand(player);
 
-		if (hand != null) {
-			var stack = player.getItemInHand(hand);
-			var tome = Tome.revert(stack);
-			player.setItemInHand(hand, Tome.attach(tome, stack));
-		}
-	}
+        if (hand != null) {
+            var stack = player.getItemInHand(hand);
+            var tome = Tome.revert(stack);
+            player.setItemInHand(hand, Tome.attach(tome, stack));
+        }
+    }
 }

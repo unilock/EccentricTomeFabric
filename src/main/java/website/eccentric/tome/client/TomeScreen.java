@@ -1,8 +1,5 @@
 package website.eccentric.tome.client;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,6 +9,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import website.eccentric.tome.Tome;
 import website.eccentric.tome.network.TomeChannel;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class TomeScreen extends Screen {
     private static final int LEFT_CLICK = 0;
@@ -30,7 +30,7 @@ public class TomeScreen extends Screen {
         if (button != LEFT_CLICK || book == null)
             return super.mouseClicked(x, y, button);
 
-		ClientPlayNetworking.send(TomeChannel.CONVERT_ID, PacketByteBufs.create().writeItem(book));
+        ClientPlayNetworking.send(TomeChannel.CONVERT_ID, PacketByteBufs.create().writeItem(book));
 
         this.onClose();
         return true;
