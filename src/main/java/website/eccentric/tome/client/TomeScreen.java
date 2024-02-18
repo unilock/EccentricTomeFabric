@@ -78,7 +78,7 @@ public class TomeScreen extends Screen {
         var startY = window.getGuiScaledHeight() / 2 - rows * iconSize + 45;
         var padding = 4;
         fill(poseStack, startX - padding, startY - padding,
-				startX + iconSize * booksPerRow + padding,
+                startX + iconSize * booksPerRow + padding,
                 startY + iconSize * rows + padding, 0x22000000);
 
         this.book = null;

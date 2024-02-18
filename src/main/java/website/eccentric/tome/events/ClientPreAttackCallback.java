@@ -22,23 +22,23 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 
 public interface ClientPreAttackCallback {
-	Event<ClientPreAttackCallback> EVENT = EventFactory.createArrayBacked(
-		ClientPreAttackCallback.class,
-		(listeners) -> (client, player, clickCount) -> {
-			for (ClientPreAttackCallback event : listeners) {
-				if (event.onClientPlayerPreAttack(client, player, clickCount)) {
-					return true;
-				}
-			}
+    Event<ClientPreAttackCallback> EVENT = EventFactory.createArrayBacked(
+        ClientPreAttackCallback.class,
+        (listeners) -> (client, player, clickCount) -> {
+            for (ClientPreAttackCallback event : listeners) {
+                if (event.onClientPlayerPreAttack(client, player, clickCount)) {
+                    return true;
+                }
+            }
 
-			return false;
-		}
-	);
+            return false;
+        }
+    );
 
-	/**
-	 * @param player the client player
-	 * @param clickCount the click count of the attack key in this tick.
-	 * @return whether to intercept attack handling
-	 */
-	boolean onClientPlayerPreAttack(Minecraft client, LocalPlayer player, int clickCount);
+    /**
+     * @param player the client player
+     * @param clickCount the click count of the attack key in this tick.
+     * @return whether to intercept attack handling
+     */
+    boolean onClientPlayerPreAttack(Minecraft client, LocalPlayer player, int clickCount);
 }

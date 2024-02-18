@@ -12,8 +12,8 @@ import website.eccentric.tome.Tome;
 import website.eccentric.tome.TomeItem;
 
 public class RenderGuiOverlayHandler {
-	public static void onRender(PoseStack poseStack, float tickDelta) {
-		var minecraft = Minecraft.getInstance();
+    public static void onRender(PoseStack poseStack, float tickDelta) {
+        var minecraft = Minecraft.getInstance();
 
         var player = minecraft.player;
         if (player == null)
@@ -61,8 +61,8 @@ public class RenderGuiOverlayHandler {
         var x = window.getGuiScaledWidth() / 2 - 17;
         var y = window.getGuiScaledHeight() / 2 + 2;
 
-		Minecraft.getInstance().getItemRenderer().renderGuiItem(book, x, y);
-		Minecraft.getInstance().font.drawShadow(poseStack, hoverName, x + 20, y + 4, 0xFFFFFFFF);
-		Minecraft.getInstance().font.drawShadow(poseStack, ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);
-	}
+        Minecraft.getInstance().getItemRenderer().renderGuiItem(book, x, y);
+        Minecraft.getInstance().font.drawShadow(poseStack, hoverName, x + 20, y + 4, 0xFFFFFFFF);
+        Minecraft.getInstance().font.drawShadow(poseStack, ChatFormatting.GRAY + convert, x + 25, y + 14, 0xFFFFFFFF);
+    }
 }

@@ -22,6 +22,6 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(KeyMapping.class)
 public interface KeyMappingAccessor {
-	@Accessor("clickCount")
-	int fabric_getTimesPressed();
+    @Accessor("clickCount")
+    int fabric_getTimesPressed();
 }

@@ -32,54 +32,54 @@ import website.eccentric.tome.events.ClientPreAttackCallback;
 
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
-	private boolean fabric_attackCancelled;
+    private boolean fabric_attackCancelled;
 
-	@Shadow
-	public LocalPlayer player;
+    @Shadow
+    public LocalPlayer player;
 
-	@Shadow
-	@Final
-	public Options options;
+    @Shadow
+    @Final
+    public Options options;
 
-	@Shadow
-	@Nullable
-	public MultiPlayerGameMode gameMode;
+    @Shadow
+    @Nullable
+    public MultiPlayerGameMode gameMode;
 
-	@Inject(
-		method = "handleKeybinds",
-		at = @At(
-			value = "INVOKE",
-			target = "Lnet/minecraft/client/player/LocalPlayer;isUsingItem()Z",
-			ordinal = 0
-		)
-	)
-	private void injectHandleKeybindsForPreAttackCallback(CallbackInfo ci) {
-		int attackKeyPressCount = ((KeyMappingAccessor) options.keyAttack).fabric_getTimesPressed();
+    @Inject(
+        method = "handleKeybinds",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/client/player/LocalPlayer;isUsingItem()Z",
+            ordinal = 0
+        )
+    )
+    private void injectHandleKeybindsForPreAttackCallback(CallbackInfo ci) {
+        int attackKeyPressCount = ((KeyMappingAccessor) options.keyAttack).fabric_getTimesPressed();
 
-		if (options.keyAttack.isDown() || attackKeyPressCount != 0) {
-			fabric_attackCancelled = ClientPreAttackCallback.EVENT.invoker().onClientPlayerPreAttack(
-				(Minecraft) (Object) this, player, attackKeyPressCount
-			);
-		} else {
-			fabric_attackCancelled = false;
-		}
-	}
+        if (options.keyAttack.isDown() || attackKeyPressCount != 0) {
+            fabric_attackCancelled = ClientPreAttackCallback.EVENT.invoker().onClientPlayerPreAttack(
+                (Minecraft) (Object) this, player, attackKeyPressCount
+            );
+        } else {
+            fabric_attackCancelled = false;
+        }
+    }
 
-	@Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
-	private void injectStartAttackForCancelling(CallbackInfoReturnable<Boolean> cir) {
-		if (fabric_attackCancelled) {
-			cir.setReturnValue(false);
-		}
-	}
+    @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
+    private void injectStartAttackForCancelling(CallbackInfoReturnable<Boolean> cir) {
+        if (fabric_attackCancelled) {
+            cir.setReturnValue(false);
+        }
+    }
 
-	@Inject(method = "continueAttack", at = @At("HEAD"), cancellable = true)
-	private void injectContinueAttackForCancelling(boolean bl, CallbackInfo ci) {
-		if (fabric_attackCancelled) {
-			if (gameMode != null) {
-				gameMode.stopDestroyBlock();
-			}
+    @Inject(method = "continueAttack", at = @At("HEAD"), cancellable = true)
+    private void injectContinueAttackForCancelling(boolean bl, CallbackInfo ci) {
+        if (fabric_attackCancelled) {
+            if (gameMode != null) {
+                gameMode.stopDestroyBlock();
+            }
 
-			ci.cancel();
-		}
-	}
+            ci.cancel();
+        }
+    }
 }

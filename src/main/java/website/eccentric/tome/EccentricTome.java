@@ -24,10 +24,10 @@ public class EccentricTome implements ModInitializer {
     public void onInitialize() {
         TomeChannel.register();
 
-		ModLoadingContext.registerConfig(ID, ModConfig.Type.COMMON, Configuration.SPEC);
-		ModConfigEvents.loading(ID).register(modConfig -> onModConfig());
-		ModConfigEvents.reloading(ID).register(modConfig -> onModConfig());
-	}
+        ModLoadingContext.registerConfig(ID, ModConfig.Type.COMMON, Configuration.SPEC);
+        ModConfigEvents.loading(ID).register(modConfig -> onModConfig());
+        ModConfigEvents.reloading(ID).register(modConfig -> onModConfig());
+    }
 
     private static void onModConfig() {
         Configuration.ALIAS_MAP.clear();

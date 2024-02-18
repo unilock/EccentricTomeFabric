@@ -9,12 +9,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class AttachmentRecipe extends CustomRecipe {
-    public static SimpleRecipeSerializer<AttachmentRecipe> SERIALIZER;
-
     public AttachmentRecipe(ResourceLocation location) {
         super(location);
     }
@@ -99,7 +96,7 @@ public class AttachmentRecipe extends CustomRecipe {
             return true;
 
         for (var tag : Configuration.INCLUDE_ITEM_TAGS.get()) {
-			if (stack.getItem().getDefaultInstance().is(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(tag))))
+            if (stack.getItem().getDefaultInstance().is(TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(tag))))
                 return true;
         }
 
@@ -124,6 +121,6 @@ public class AttachmentRecipe extends CustomRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer() {
-        return SERIALIZER;
+        return EccentricTome.ATTACHMENT;
     }
 }

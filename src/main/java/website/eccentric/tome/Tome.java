@@ -17,7 +17,7 @@ public class Tome {
         var modsBooks = getModsBooks(tome);
         var mod = ModName.from(book);
         var books = modsBooks.get(mod);
-		var registry = Registry.ITEM.getKey(book.getItem());
+        var registry = Registry.ITEM.getKey(book.getItem());
         books.removeIf(b -> Registry.ITEM.getKey(b.getItem()).equals(registry));
 
         setModsBooks(book, modsBooks);

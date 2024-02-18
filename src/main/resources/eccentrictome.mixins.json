@@ -5,6 +5,10 @@
   "mixins": [
     "PlayerEntityMixin"
   ],
+  "client": [
+    "client.KeyMappingAccessor",
+    "client.MinecraftMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
