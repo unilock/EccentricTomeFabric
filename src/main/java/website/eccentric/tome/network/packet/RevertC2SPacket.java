@@ -12,7 +12,7 @@ public class RevertC2SPacket {
         var hand = Tome.inHand(player);
 
         if (hand != null) {
-            var stack = player.getItemInHand(hand);
+            var stack = player.getItemInHand(hand).copy();
             var tome = Tome.revert(stack);
             player.setItemInHand(hand, Tome.attach(tome, stack));
         }
