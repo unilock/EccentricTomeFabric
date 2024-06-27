@@ -19,6 +19,7 @@ public class Tome {
         var books = modsBooks.get(mod);
         var registry = BuiltInRegistries.ITEM.getKey(book.getItem());
         books.removeIf(b -> BuiltInRegistries.ITEM.getKey(b.getItem()).equals(registry));
+        books.removeIf(b -> b.is(EccentricTome.TOME));
 
         setModsBooks(book, modsBooks);
         Migration.setVersion(book);
