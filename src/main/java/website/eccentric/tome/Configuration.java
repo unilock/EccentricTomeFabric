@@ -55,7 +55,8 @@ public class Configuration {
                                 "tconstruct:mighty_smelting",
                                 "tconstruct:puny_smelting",
                                 "tconstruct:tinkers_gadgetry",
-                                "theoneprobe:probenote"),
+                                "theoneprobe:probenote",
+                                "wizards_reborn:arcanemicon"),
                         Validator::isStringResource);
 
         NAMES = BUILDER

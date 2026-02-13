@@ -59,12 +59,10 @@ public class AttachmentRecipe extends CustomRecipe {
                 continue;
 
             if (stack.getItem() instanceof TomeItem)
-                tome = stack;
+                tome = stack.copy();
             else
-                target = stack;
+                target = stack.copy();
         }
-
-        tome = tome.copy();
 
         return Tome.attach(tome, target);
     }
